@@ -1,7 +1,6 @@
 <template>
   <div
-    v-show="props.show"
-    class="drop-board"
+    class="drop-board max-h-[calc(100vh-50px)] min-h-[540px)]"
     @mouseleave="handleLeave"
     :style="{ width: props.width, height: props.height }"
   >
@@ -17,14 +16,9 @@ const props = defineProps({
   },
   height: {
     type: String,
-    default: "calc(100vh - 50px)",
-  },
-  show: {
-    type: Boolean,
-    default: false,
+    default: "540px",
   },
 });
-const show = ref(false);
 const emit = defineEmits(["show", "offShow"]);
 const onShow = () => {
   emit("show");
@@ -36,12 +30,12 @@ const handleLeave = () => {
 <style lang="scss" scoped>
 .drop-board {
   position: absolute;
-  top: 38px;
+  top: 50px;
   left: 0;
   padding: 4px;
   background-color: #ffffff;
   background-clip: padding-box;
-  border-radius: 8px;
+  border-radius: 0 0 8 8px;
   outline: none;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
     0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);

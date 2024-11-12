@@ -1,47 +1,57 @@
 <template>
   <div class="home-board">
-    <div class="board-title" @click="handleShowClick" @mouseover="handleShowHover" @handleLeave="show = false">{{ title }}
-    </div>
-    <baseBoard :show="show">
-      <div class="board-left"></div>
-      <div class="board-right"></div>
+    <baseBoard :width="props.width" :height="props.height" v-show="true">
+      <div class="flex h-full">
+        <template v-if="props.info.displayStyle === 'waterfall' || !props.info.displayStyle">
+          <waterfallBoard :info="props.info" />
+        </template>
+        <template v-if="props.info.displayStyle === 'tile'">
+          <tileWaterfallBoard :info="props.info" />
+        </template>
+        <template v-if="props.info.displayStyle === 'product'"></template>
+        <template v-if="props.info.displayStyle === 'side-menu'"></template>
+      </div>
     </baseBoard>
-
   </div>
 </template>
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
-import baseBoard from './components/baseBoard'
+import { ref, defineProps, defineEmits } from "vue";
+import baseBoard from "./components/baseBoard";
+import waterfallBoard from "./components/waterfallBoard";
+import tileWaterfallBoard from "./components/tileWaterfallBoard"; 
 const props = defineProps({
   width: {
     type: String,
-    default: '100%'
+    default: "100%",
   },
   height: {
     type: String,
-    default: 'calc(100%-50px)'
+    default: "540px",
   },
   trigger: {
     type: String,
-    default: 'hover' // hover click
+    default: "hover", // hover click
   },
   title: {
     type: String,
-    default: ''
+    default: "",
   },
   dataList: {
     type: Array,
-    default: []
+    default: [],
   },
-})
-const show = ref(false)
-const handleShowHover = () => {
-
-  props.trigger === 'hover' && (show.value = true)
-  console.log('hover',show.value)
-}
-const handleShowClick = () => {
-  props.trigger === 'click' && (show.value = true)
-}
+  info: {
+    type: Object,
+    default: () => ({
+      title: "",
+      description: "",
+      link: "",
+    }),
+  },
+  show: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>
 <style lang="scss" scoped></style>
