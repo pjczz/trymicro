@@ -3,22 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --host 0.0.0.0",
     "build": "vue-cli-service build"
   },
   "dependencies": {
     "@micro-zoe/micro-app": "1.0.0-rc.13",
+    "ant-design-vue": "4.x",
     "core-js": "^3.8.3",
+    "unocss": "^0.64.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@unocss/preset-uno": "^0.64.0",
+    "@unocss/webpack": "^0.64.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "sass": "^1.32.7",
-    "sass-loader": "^12.0.0"
+    "sass-loader": "^12.0.0",
+    "webpack-virtual-modules": "^0.6.2"
   }
 }

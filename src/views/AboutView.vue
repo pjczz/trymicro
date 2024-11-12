@@ -1,5 +1,10 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <micro-app
+      name="Vben Admin Antd"
+      url="http://192.168.1.120:5666/"
+      iframe
+    ></micro-app>
+
   </div>
 </template>

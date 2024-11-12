@@ -1,17 +1,46 @@
 <template>
   <div class="home">
-    <micro-app name='yudao-ui-admin-vue3' url='http://localhost:81/'></micro-app>
+    <!--  -->
+    <micro-app
+      name="yudao-ui-admin-vue3"
+      @created="created"
+      @beforemount="beforemount"
+      @mounted="mounted"
+      @unmount="unmount"
+      @error="error"
+      url="http://192.168.1.120:80/"
+      iframe
+    ></micro-app>
   </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import micro from "@micro-zoe/micro-app";
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+const created = () => {
+  console.log("micro-app元素被创建");
+};
+const beforemount = () => {
+  console.log("即将渲染");
+};
+const mounted = () => {
+  console.log("已经渲染完成");
+  // micro.router.replace({
+  //   name: "yudao-ui-admin-vue3",
+  //   path: "http://localhost:3000/page1",
+  // });
+};
+const unmount = () => {
+  console.log("已经卸载");
+};
+const error = () => {
+  console.log("加载出错");
+};
 </script>
+<style lang="scss">
+.home{
+  padding: 0;
+  margin: 0;
+}
+</style>
