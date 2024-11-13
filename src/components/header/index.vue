@@ -3,10 +3,10 @@
     <div class="bg-[#ff6a00]" v-if="isSubMenu">
       <button
         @click="handleShowClick"
-        @mouseover="handleShowHover(index)"
+        @mouseenter="handleHover"
         aria-label="展开产品面板"
         class="expand-btn"
-        :class="{ 'expand-btn-active': show }"
+        :class="{ 'expand-btn-active': siderShow }"
       >
         <span class="sub-line"></span><span class="sub-line"></span><span class="sub-line"></span>
       </button>
@@ -22,11 +22,20 @@
         :data-list="headerList[tempHoverIndex].dataList"
         :show="show"
       />
-      <subBoard v-else width="1030px" height="calc(100vh - 50px)" :show="show" />
+      <subBoard
+        @offShow="siderShow = false"
+        v-else
+        width="1030px"
+        :catagoryData="catagoryData"
+        :recentList="recentList"
+        height="calc(100vh - 50px)"
+        :show="siderShow"
+      />
       <template v-if="!isSubMenu">
         <div
           class="p-[10px] left-item flex justify-center relative cursor-pointer select-none"
           :class="{ active: item.active }"
+          @mouseover="handleShowHover(index)"
           v-for="(item, index) in headerList"
           :key="index"
         >
@@ -58,8 +67,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import { headerList as stHeaderList } from './mock.js'
+import { ref, computed, watchEffect } from 'vue'
+import {
+  headerList as stHeaderList,
+  catagoryData as slCatagoryData,
+  recentList as slRecentList,
+} from './mock.js'
 import homeBoard from '@/components/dropBoard/homeBoard.vue'
 import subBoard from '@/components/dropBoard/subBoard.vue'
 import { useUserStore } from '@/stores/user'
@@ -67,22 +80,30 @@ const store = useUserStore()
 const headerList = ref(stHeaderList)
 const tempHoverIndex = ref(0)
 const show = ref(false)
+const siderShow = ref(false)
 const search = ref()
+const catagoryData = ref(slCatagoryData)
 const placeholder = ref('搜索共享租车')
+
 const isSubMenu = computed(() => {
   return store.isSubMenu
 })
+watchEffect(() => console.log(siderShow.value, 'ssidershow change'))
 const handleMouseLeave = () => {
+  console.log(isSubMenu.value)
   if (!isSubMenu.value) {
-    show.value = false
+    // show.value = false
   }
 }
 const handleShowHover = (index: number) => {
   tempHoverIndex.value = index
   show.value = true
 }
+const handleHover = () => {
+  siderShow.value = true
+}
 const handleShowClick = () => {
-  show.value = true
+  siderShow.value = !siderShow.value
 }
 </script>
 <style lang="scss" scoped>

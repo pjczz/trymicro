@@ -8,7 +8,7 @@ import Header from './components/header/index.vue'
   <RouterView />
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './index.scss';
 body {
   margin: 0;

@@ -1,6 +1,6 @@
 <template>
   <div class="home-board">
-    <baseBoard :width="props.width" :height="props.height" v-show="true">
+    <baseBoard :width="props.width" :height="props.height" v-show="props.show">
       <div class="flex h-full">
         <template v-if="props.info.displayStyle === 'waterfall' || !props.info.displayStyle">
           <waterfallBoard :info="props.info" />

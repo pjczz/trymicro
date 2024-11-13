@@ -1,15 +1,27 @@
 <template>
   <div
     class="drop-board max-h-[calc(100vh-50px)] min-h-[540px)]"
-    @mouseleave="handleLeave"
-    :style="{ width: props.width, height: props.height, transform: isAnimate ? 'scaleX(0)' : '' }"
-    :class="{ open: isAnimate ? true : false }"
+    :style="{
+      width: props.width,
+      height: props.height,
+      transform: props.isAnimate ? 'scaleX(0)' : '',
+    }"
+    :class="{
+      open: props.isAnimate && props.show ? true : false,
+      closed: !(props.isAnimate && props.show),
+    }"
   >
     <slot></slot>
   </div>
+  <div
+    @click="onClose"
+    v-if="props.isAnimate && props.show"
+    class="mask w-full"
+    :style="{ height: props.height }"
+  ></div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 const props = defineProps({
   width: {
     type: String,
@@ -23,16 +35,25 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  show: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits(['show', 'offShow'])
-const onShow = () => {
-  emit('show')
-}
-const handleLeave = () => {
+const onClose = () => {
   emit('offShow')
 }
 </script>
 <style scoped>
+.mask {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  width: 100vw;
+}
 .drop-board {
   position: absolute;
   top: 50px;
@@ -47,8 +68,13 @@ const handleLeave = () => {
     0 3px 6px -4px rgba(0, 0, 0, 0.12),
     0 9px 28px 8px rgba(0, 0, 0, 0.05);
   z-index: 100;
-  animation: slideIn 1s forwards; /* 设置动画 */
+
   transform-origin: left center; /* 动画起点在右边 */
+  z-index: 100;
+}
+.open {
+  box-shadow: none;
+  animation: slideIn 0.5s forwards; /* 设置动画 */
 }
 @keyframes slideIn {
   0% {
@@ -59,10 +85,10 @@ const handleLeave = () => {
   }
 }
 
-.panel.closed {
-  transform-origin: right center; /* 动画起点在右边 */
+.closed {
+  transform-origin: left center; /* 动画起点在右边 */
   transform: scaleX(1); /* 初始状态 */
-  animation: slideOut 1s forwards; /* 收缩动画 */
+  animation: slideOut 0.5s forwards; /* 收缩动画 */
 }
 
 @keyframes slideOut {
