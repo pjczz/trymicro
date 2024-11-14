@@ -26,6 +26,17 @@ const router = createRouter({
       }
     },
     {
+      path: '/abs',
+      name: 'abs',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '../views/absView.vue'),
+      meta: {
+        name: ''
+      }
+    },
+    {
       path: '/:pathMatch(.*)*', // 处理所有未匹配的路由
       redirect: '/home',           // 重定向到首页
     },

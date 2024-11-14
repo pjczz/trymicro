@@ -7,7 +7,7 @@
       </div>
       <div class="search">
         <div class="w-[300px]">
-          <a-input v-model:value="searchText" placeholder="Basic usage" />
+          <a-input @pressEnter="handleSearch" v-model:value="inputText" placeholder="Basic usage" />
         </div>
       </div>
     </template>
@@ -23,12 +23,9 @@
       <!-- .filter((ele) => ele.parentId !== '') -->
       <productBoardItem
         :key="item.categoryId"
-        v-for="item in props.catagoryData.categories.filter(
-          (ele) =>
-            ele.parentId === '' &&
-            (props.currentSelect === 'all' || ele.categoryId === props.currentSelect),
-        )"
-        :catagory-data="catagoryNewData"
+        v-for="item in currentCategoryList"
+        :currentProductList="currentProductList"
+        :searchText="searchText"
         :data="item"
       />
     </div>
@@ -38,8 +35,11 @@
 import { ref, defineProps, defineEmits, computed, watchEffect } from 'vue'
 import { recentList as slRecentList } from '@/components/header/mock.js'
 import productBoardItem from './productBoardItem.vue'
+import type { Ref } from 'vue'
+import type { catagoryDataType, catagoryType } from '@/type/mock'
 import { deepClone } from '@/utils/utils'
 const searchText = ref('')
+const inputText = ref('')
 const props = defineProps({
   catagoryData: {
     type: Object,
@@ -54,26 +54,82 @@ const props = defineProps({
 })
 const emit = defineEmits(['show', 'offShow'])
 const recentList = ref(slRecentList)
-
-const catagoryNewData = ref({})
+const currentProductList: Ref<catagoryType[]> = ref([])
+const currentCategoryList: Ref<catagoryType[]> = ref([])
+// 生成subCatagoryList
+const getSubCatagoryList = () => {
+  const subCatagoryList: catagoryType[] = []
+  // 获取subCatagoryList
+  props.catagoryData.categories.forEach((element: catagoryType) => {
+    // 筛选出所有有产品的 作为二级 名为subCategorylist\
+    // 如果选择的是all 直接进入
+    // 如果选择不是all 做减法，必须该节点是，或者父节点是 我们选择的大类id （第一步保证每个都有产品products）
+    if (
+      element.products.length &&
+      (props.currentSelect === 'all' ||
+        element.categoryId === props.currentSelect ||
+        element.parentId === props.currentSelect)
+    ) {
+      subCatagoryList.push(element)
+    }
+  })
+  currentProductList.value = subCatagoryList
+}
+const handleSearch = () => {
+  searchText.value = inputText.value
+}
+// 将product详情挂载到subCatagory中
+const getProductList = () => {
+  if (props.catagoryData && props.catagoryData.products) {
+    currentProductList.value.forEach((subCatagory: catagoryType) => {
+      subCatagory.productsList = []
+      subCatagory.products.forEach((productName) => {
+        ;(props.catagoryData as catagoryDataType).products?.forEach((product) => {
+          // 找到product 如果不在all中 无需执行搜索 如果在all中 则需要搜索
+          if (productName === product.productId) {
+            if (props.currentSelect !== 'all') {
+              subCatagory.productsList.push(product)
+            } else if (
+              !searchText.value ||
+              product.keywords.some((keyword) => keyword.includes(searchText.value))
+            )
+              subCatagory.productsList.push(product)
+          }
+        })
+      })
+    })
+  }
+  currentProductList.value = currentProductList.value.filter((item) => item.productsList.length)
+}
+const getCurrentCategoryList = () => {
+  const tempNameList = []
+  const res = []
+  currentProductList.value.forEach((item) => {
+    if (
+      item.categoryId === props.currentSelect ||
+      item.parentId === props.currentSelect ||
+      props.currentSelect === 'all'
+    ) {
+      if (!tempNameList.some((id) => id === item.categoryId || id === item.parentId)) {
+        tempNameList.push(item.parentId ? item.parentId : item.categoryId)
+      }
+    }
+  })
+  tempNameList.forEach((item) => {
+    const tempItem = props.catagoryData.categories.find((ele) => ele.categoryId === item)
+    if (tempItem) {
+      res.push(tempItem)
+    }
+  })
+  currentCategoryList.value = res
+}
 watchEffect(() => {
-  if (props.catagoryData && props.currentSelect) {
-    catagoryNewData.value = deepClone(props.catagoryData)
-    catagoryNewData.value.products = catagoryNewData.value.products.filter((item) => {
-      if (!searchText.value || item.keywords.indexOf(searchText.value)) {
-        return true
-      }
-    })
-    catagoryNewData.value.categories = catagoryNewData.value.categories.filter((item) => {
-      if (
-        props.currentSelect === 'all' ||
-        item.productId === props.currentSelect ||
-        item.parentId === props.currentSelect
-      ) {
-        return true
-      }
-    })
-    console.log(catagoryNewData.value, 'catagoryNewData.value')
+  if (props.catagoryData && props.catagoryData.products && props.catagoryData.categories) {
+    // 整理出sublist
+    getSubCatagoryList()
+    // 新增productlist属性到每个subcatagory中，代表当前subcatagory下的所有product
+    getProductList()
+    getCurrentCategoryList()
   }
 })
 </script>

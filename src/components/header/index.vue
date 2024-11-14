@@ -88,16 +88,18 @@ const placeholder = ref('搜索共享租车')
 const isSubMenu = computed(() => {
   return store.isSubMenu
 })
+const recentList = ref(slRecentList)
 watchEffect(() => console.log(siderShow.value, 'ssidershow change'))
 const handleMouseLeave = () => {
-  console.log(isSubMenu.value)
   if (!isSubMenu.value) {
-    // show.value = false
+    show.value = false
   }
+  console.log(!isSubMenu.value, show.value)
 }
 const handleShowHover = (index: number) => {
   tempHoverIndex.value = index
   show.value = true
+  console.log(show.value, 'handleShowHover')
 }
 const handleHover = () => {
   siderShow.value = true

@@ -1,5 +1,5 @@
 <template>
-  <div class="board-left bg-[#F8FAFF] w-[270px] h-full flex flex-col items-center pt-[40px]">
+  <div class="board-left bg-[#F8FAFF] w-[270px] flex flex-col items-center pt-[40px]">
     <a v-if="props.info.link" :href="props.info.link" class="text-[22px] font-bold"
       >{{ props.info.name }}&nbsp;></a
     >
@@ -10,8 +10,12 @@
       }}
     </div>
   </div>
-  <div class="board-right w-[calc(100%-270px)] h-full px-[30px] pt-[40px] flex flex-col flex-wrap">
-    <div class="flex flex-col w-[23%] pb-[38px]" :key="item.id" v-for="item in props.info.dataList">
+  <div class="board-right w-[calc(100%-270px)] px-[30px] pt-[40px]">
+    <div
+      class="flex flex-col pb-[38px] board-right-item mb-[38px]"
+      :key="item.id"
+      v-for="item in props.info.dataList"
+    >
       <a v-if="item.link" :href="item.link" class="text-[18px] font-bold mb-[20px]"
         >{{ item.title }}&nbsp;></a
       >
@@ -39,4 +43,13 @@ const props = defineProps({
   },
 })
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.board-right {
+  column-count: 4;
+  column-gap: 32px;
+  break-inside: avoid;
+}
+.board-right-item {
+  break-inside: avoid;
+}
+</style>

@@ -1,13 +1,17 @@
 <template>
   <div class="flex flex-col w-[720px] mt-[20px]">
-    <div class="font-bold mb-[10px] top-title">{{ props.data.name }}</div>
+    <div class="flex font-bold mb-[10px] top-title text-[14px]">{{ props.data.name }}</div>
     <div class="w-full main-flex">
       <div
         class="catagoryList flex flex-col flex-nowrap mb-[20px]"
-        v-for="item in currentProductList"
-        :key="item.categoryId"
+        v-for="(item, index) in props.currentProductList.filter(
+          (product) =>
+            product.parentId === props.data.categoryId ||
+            product.categoryId === props.data.categoryId,
+        )"
+        :key="index"
       >
-        <div class="font-bold mb-[10px]">{{ item.name }}</div>
+        <div class="font-bold mb-[10px] text-[12px]">{{ item.name }}</div>
         <div class="">
           <div class="catagory flex-nowrap">
             <div
@@ -35,50 +39,19 @@ const props = defineProps({
       return {}
     },
   },
-  catagoryData: {
-    type: Object,
+  currentProductList: {
+    type: Array,
     default: () => {
-      return {}
+      return []
     },
+  },
+  searchText: {
+    type: String,
+    default: '',
   },
 })
 
-const currentProductList: Ref<catagoryType[]> = ref([])
-// 生成subCatagoryList
-const getSubCatagoryList = () => {
-  const subCatagoryList: catagoryType[] = []
-  // 获取subCatagoryList
-  props.catagoryData.categories.forEach((element: catagoryType) => {
-    if (element.parentId === props.data.categoryId) {
-      subCatagoryList.push(element)
-    }
-  })
-  currentProductList.value = subCatagoryList
-}
-// 将product详情挂载到subCatagory中
-const getProductList = () => {
-  if (props.catagoryData && props.catagoryData.products) {
-    currentProductList.value.forEach((subCatagory: catagoryType) => {
-      subCatagory.productsList = []
-      subCatagory.products.forEach((productName) => {
-        ;(props.catagoryData as catagoryDataType).products?.forEach((product) => {
-          if (productName === product.productId) {
-            subCatagory.productsList.push(product)
-          }
-        })
-      })
-    })
-  }
-}
 const emit = defineEmits(['show', 'offShow'])
-watchEffect(() => {
-  if (props.catagoryData && props.catagoryData.products && props.catagoryData.categories) {
-    // 整理出sublist
-    getSubCatagoryList()
-    // 新增productlist属性到每个subcatagory中，代表当前subcatagory下的所有product
-    getProductList()
-  }
-})
 </script>
 <style scoped>
 .main-flex {
@@ -119,13 +92,14 @@ watchEffect(() => {
 }
 .top-title {
   position: relative;
+  gap: 10px;
 }
 .top-title::after {
   content: '';
-  position: absolute;
-  right: 0;
+  display: flex;
+  margin-top: 7.5px;
+  height: 1px;
   background-color: #e2e2e2;
-  top: 7.5px;
-  width: calc(600px - 100%);
+  flex: 1;
 }
 </style>

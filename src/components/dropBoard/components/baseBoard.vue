@@ -4,11 +4,12 @@
     :style="{
       width: props.width,
       height: props.height,
-      transform: props.isAnimate ? 'scaleX(0)' : '',
+      transform: props.isAnimate ? 'scaleX(0)' : 'none',
+      display: props.isAnimate ? 'flex' : props.show ? 'flex' : 'none',
     }"
     :class="{
-      open: props.isAnimate && props.show ? true : false,
-      closed: !(props.isAnimate && props.show),
+      open: props.isAnimate && props.show,
+      closed: props.isAnimate && !props.show,
     }"
   >
     <slot></slot>
