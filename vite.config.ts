@@ -4,6 +4,7 @@ import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import viteCompression from 'vite-plugin-compression'
 const root = process.cwd()
 // https://vite.dev/config/
 export default ({ command, mode }) => {
@@ -16,7 +17,21 @@ export default ({ command, mode }) => {
   }
   return {
     base: env.VITE_BASE,
-    plugins: [vue(), vueJsx(), vueDevTools(), UnoCSS()],
+    plugins: [
+      vue(),
+      vueJsx(),
+      vueDevTools(),
+      UnoCSS(),
+      viteCompression({
+        // 配置项
+        verbose: true, // 是否在控制台输出压缩结果
+        disable: false, // 是否禁用压缩
+        deleteOriginFile: true,
+        threshold: 10240, // 文件大小超过此值时进行压缩，单位为字节
+        algorithm: 'gzip', // 压缩算法，可选 'gzip' 或 'brotli'
+        ext: '.gz', // 压缩后的文件扩展名
+      }),
+    ],
     server: {
       port: 7529, // 设置端口号为 7529（根据需要修改）
     },
@@ -38,11 +53,23 @@ export default ({ command, mode }) => {
     },
     build: {
       // 设置最终构建的浏览器兼容目标
-      target: 'es2015',
+      target: 'es6',
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          // 开启压缩
+          drop_console: true, // 移除console
+          drop_debugger: true, // 移除debugger
+        },
+        mangle: {
+          // 是否改变变量名
+          toplevel: true,
+        },
+      },
       // 构建后是否生成 source map 文件
       sourcemap: false,
       //  chunk 大小警告的限制（以 kbs 为单位）
-      chunkSizeWarningLimit: 2000,
+      chunkSizeWarningLimit: 500,
       // 启用/禁用 gzip 压缩大小报告
       reportCompressedSize: false,
     },
