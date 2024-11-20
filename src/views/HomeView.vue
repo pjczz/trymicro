@@ -8,7 +8,7 @@
       @mounted="mounted"
       @unmount="unmount"
       @error="error"
-      url="http://192.168.1.120:80/"
+      :url="url"
       baseroute="/home"
       iframe
     ></micro-app>
@@ -19,10 +19,13 @@
 // @ is an alias to /src
 import micro from '@micro-zoe/micro-app'
 import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 // 首先路由拦截  查询当前的meta 如果这个路由是子路由的 代表进入子系统  保存到stage isSubSystem中
 // computed 判断使用什么组件  一个是homeBoard 一个是subBoard
 const route = useRoute()
 const name = route.meta.title || '默认标题'
+const url = ref(import.meta.env.VITE_YUDAO_API_URL)
+console.log(url.value, 'url.value')
 const created = () => {
   console.log('micro-app元素被创建')
 }
