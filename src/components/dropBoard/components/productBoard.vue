@@ -32,12 +32,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, computed, watchEffect } from 'vue'
+import { ref, defineProps, defineEmits, watchEffect } from 'vue'
 import { recentList as slRecentList } from '@/components/header/mock.js'
 import productBoardItem from './productBoardItem.vue'
 import type { Ref } from 'vue'
 import type { catagoryDataType, catagoryType } from '@/type/mock'
-import { deepClone } from '@/utils/utils'
 const searchText = ref('')
 const inputText = ref('')
 const props = defineProps({
@@ -89,10 +88,7 @@ const getProductList = () => {
           if (productName === product.productId) {
             if (props.currentSelect !== 'all') {
               subCatagory.productsList.push(product)
-            } else if (
-              !searchText.value ||
-              product.keywords.some((keyword) => keyword.includes(searchText.value))
-            )
+            } else if (!searchText.value || product.keywords.some((keyword) => keyword.includes(searchText.value)))
               subCatagory.productsList.push(product)
           }
         })
@@ -133,32 +129,37 @@ watchEffect(() => {
   }
 })
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .search {
   padding-bottom: 10px;
   margin-bottom: 20px;
   border-bottom: 1px solid #e2e2e2;
 }
+
 .catagory {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 设置 3 列 */
   column-gap: 12px;
   font-size: 12px;
 }
+
 .catagory-item {
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
+
   a {
-    color: #666;
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
     font-size: 12px;
+    color: #666;
   }
+
   a:hover {
-    color: #000000;
+    color: #000;
   }
 }
+
 .catagory-item:hover {
   background-color: #f4f6f7;
 }

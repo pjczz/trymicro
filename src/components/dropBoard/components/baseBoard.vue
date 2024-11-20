@@ -51,51 +51,54 @@ const onClose = () => {
   position: fixed;
   top: 50px;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
   z-index: 10;
   width: 100vw;
+  background-color: rgb(0 0 0 / 20%);
 }
+
 .drop-board {
   position: absolute;
   top: 50px;
   left: 0;
+  z-index: 100;
   padding: 4px;
-  background-color: #ffffff;
+  background-color: #fff;
   background-clip: padding-box;
   border-radius: 0 0 8 8px;
   outline: none;
   box-shadow:
-    0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12),
-    0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  z-index: 100;
-
+    0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 3px 6px -4px rgb(0 0 0 / 12%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
   transform-origin: left center; /* 动画起点在右边 */
-  z-index: 100;
 }
+
 .open {
   box-shadow: none;
-  animation: slideIn 0.5s forwards; /* 设置动画 */
+  animation: slide-in 0.5s forwards; /* 设置动画 */
 }
-@keyframes slideIn {
+
+@keyframes slide-in {
   0% {
     transform: scaleX(0); /* 关闭状态 */
   }
+
   100% {
     transform: scaleX(1); /* 打开状态 */
   }
 }
 
 .closed {
-  transform-origin: left center; /* 动画起点在右边 */
   transform: scaleX(1); /* 初始状态 */
-  animation: slideOut 0.5s forwards; /* 收缩动画 */
+  transform-origin: left center; /* 动画起点在右边 */
+  animation: slide-out 0.5s forwards; /* 收缩动画 */
 }
 
-@keyframes slideOut {
+@keyframes slide-out {
   0% {
     transform: scaleX(1); /* 打开状态 */
   }
+
   100% {
     transform: scaleX(0); /* 关闭状态 */
   }

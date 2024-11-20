@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import Header from './components/header/index.vue'
 </script>
 
@@ -9,7 +9,8 @@ import Header from './components/header/index.vue'
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import url('./index.scss');
+
 body {
   margin: 0;
 }

@@ -1,12 +1,6 @@
 <template>
   <div class="home-board">
-    <baseBoard
-      :isAnimate="true"
-      @offShow="handleClose"
-      :width="props.width"
-      :height="props.height"
-      :show="props.show"
-    >
+    <baseBoard :isAnimate="true" @offShow="handleClose" :width="props.width" :height="props.height" :show="props.show">
       <div class="flex h-full">
         <div class="left-board h-full w-[240px]">
           <a-menu

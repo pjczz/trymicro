@@ -2,7 +2,7 @@
 
 declare module '*.vue' {
   import { DefineComponent } from 'vue'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
+  // eslint-disable-next-line
   const component: DefineComponent<{}, {}, any>
   export default component
 }
@@ -31,7 +31,6 @@ interface ImportMetaEnv {
   readonly VITE_SIGNATURE_KEY: string
   readonly VITE_YUDAO_API_URL: string
   readonly VITE_VBEN_API_URL: string
-
 }
 
 declare global {
