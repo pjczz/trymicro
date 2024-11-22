@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import type { App } from 'vue'
 import HomeView from '../views/HomeView.vue'
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/modules/user'
+import { useI18n } from '@/hooks/web/useI18n'
+const { t } = useI18n()
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,8 +14,8 @@ const router = createRouter({
       name: 'child',
       component: HomeView,
       meta: {
-        name: 'yudao'
-      }
+        name: 'yudao',
+      },
     },
     {
       path: '/about/:page*',
@@ -22,8 +25,8 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
       meta: {
-        name: 'vben'
-      }
+        name: 'vben',
+      },
     },
     {
       path: '/abs',
@@ -33,12 +36,32 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '../views/absView.vue'),
       meta: {
-        name: ''
-      }
+        name: '',
+      },
     },
     {
       path: '/:pathMatch(.*)*', // 处理所有未匹配的路由
-      redirect: '/home',           // 重定向到首页
+      redirect: '/home', // 重定向到首页
+    },
+    {
+      path: '/login',
+      component: () => import('@/views/Login/Login.vue'),
+      name: 'Login',
+      meta: {
+        hidden: true,
+        title: t('router.login'),
+        noTagsView: true,
+      },
+    },
+    {
+      path: '/forget',
+      component: () => import('@/views/Login/Forget.vue'),
+      name: 'Forget',
+      meta: {
+        hidden: true,
+        title: t('router.forget'),
+        noTagsView: true,
+      },
     },
   ],
 })
@@ -51,11 +74,13 @@ router.beforeEach((to, from, next) => {
     console.log('success')
     userStore.setIsSubMenu(true)
     // 如果不需要认证，直接访问
-  }
-  else {
+  } else {
     userStore.setIsSubMenu(false)
     console.log('failure')
   }
-  next();
-});
+  next()
+})
+export const setupRouter = (app: App<Element>) => {
+  app.use(router)
+}
 export default router

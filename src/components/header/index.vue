@@ -46,11 +46,7 @@
       </template>
       <template v-else>
         <div class="mx-[12px]">
-          <a
-            href=""
-            class="text-[#666666] text-[12px] bg-[#f4f6f7] leading-[30px] px-[12px] py-[8px]"
-            >工作台</a
-          >
+          <a href="" class="text-[#666666] text-[12px] bg-[#f4f6f7] leading-[30px] px-[12px] py-[8px]">工作台</a>
         </div>
       </template>
     </div>
@@ -68,14 +64,13 @@
 </template>
 <script lang="ts" setup>
 import { ref, computed, watchEffect } from 'vue'
-import {
-  headerList as stHeaderList,
-  catagoryData as slCatagoryData,
-  recentList as slRecentList,
-} from './mock.js'
+import { headerList as stHeaderList, catagoryData as slCatagoryData, recentList as slRecentList } from './mock.js'
 import homeBoard from '@/components/dropBoard/homeBoard.vue'
 import subBoard from '@/components/dropBoard/subBoard.vue'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/modules/user'
+import { defineComponent } from 'vue'
+
+defineComponent({ name: 'headerComponent' })
 const store = useUserStore()
 const headerList = ref(stHeaderList)
 const tempHoverIndex = ref(0)
@@ -110,77 +105,87 @@ const handleShowClick = () => {
 </script>
 <style lang="scss" scoped>
 .left-item:hover {
-  color: rgb(19, 102, 236);
+  color: rgb(19 102 236);
   opacity: 1;
+
   /* 悬停时显示内容 */
 }
 
 .left-item:hover::after {
   opacity: 1;
+
   /* 悬停时显示内容 */
 }
 
 .left-item::after {
-  content: '^';
   position: absolute;
-  scale: 0.6;
   bottom: -8px;
+  content: '^';
   opacity: 0;
+  scale: 0.6;
 }
 
 .active {
-  color: rgb(19, 102, 236);
+  color: rgb(19 102 236);
 }
+
 .expand-btn {
   position: relative;
+  box-sizing: border-box;
   width: 50px;
   height: 50px;
-  padding: 0px;
-  border: 1px solid transparent;
-  box-sizing: border-box;
-  outline: none;
-  background: none;
-  line-height: inherit;
-  cursor: pointer;
+  padding: 0;
   font-family: inherit;
   font-size: inherit;
+  line-height: inherit;
+  color: inherit;
   text-align: center;
   text-decoration: none;
-  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  outline: none;
   transition: 0.3s ease-out;
 
   .sub-line span {
     left: 18px;
   }
+
   .sub-line {
-    display: block;
     position: absolute;
     left: 15px;
-    background-color: rgb(255, 255, 255);
+    display: block;
     width: 20px;
     height: 2px;
+    background-color: rgb(255 255 255);
     transition: 0.3s ease-out;
   }
+
   .sub-line:first-child {
     top: 17px;
     transform: rotate(0deg);
     transform-origin: left center;
   }
+
   .sub-line:nth-child(3) {
     top: 31px;
     transform: rotate(0deg);
     transform-origin: left center;
   }
+
   .sub-line:nth-child(2) {
     top: 24px;
   }
 }
+
 .expand-btn-active span:first-child {
   transform: rotate(45deg) !important;
 }
+
 .expand-btn-active span:nth-child(2) {
   opacity: 0;
 }
+
 .expand-btn-active span:nth-child(3) {
   transform: rotate(-45deg) !important;
 }

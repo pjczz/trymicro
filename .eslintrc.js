@@ -19,6 +19,8 @@ module.exports = {
     'prettier/prettier': 'warn',
     'vue/multi-word-component-names': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'vue/component-name-in-template-casing': 'off', // 关闭该规则
+    '@typescript-eslint/no-unsafe-function-type': 'off',
   },
   globals: {
     defineProps: 'readonly',

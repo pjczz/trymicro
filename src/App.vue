@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import Header from './components/header/index.vue'
+import { App, ConfigProvider } from 'ant-design-vue'
+import Layout from '@/layout/index.vue'
 </script>
 
 <template>
-  <Header />
-  <RouterView />
+  <!--   <ConfigProvider :locale="antdLocale" :theme="tokenTheme"> -->
+  <ConfigProvider>
+    <App>
+      <Layout />
+    </App>
+  </ConfigProvider>
 </template>
 
 <style lang="scss">
