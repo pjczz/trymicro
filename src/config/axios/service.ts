@@ -238,4 +238,6 @@ const handleAuthorized = () => {
       },
     })
   }
+  return Promise.reject(t('sys.api.timeoutMessage'))
 }
+export { service }

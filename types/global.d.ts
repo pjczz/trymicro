@@ -12,6 +12,11 @@ declare global {
 
   type ComponentRef<T> = InstanceType<T>
 
+  interface Window {
+    // 标记 window 为 any 类型
+    [key: string]: any
+  }
+
   type LocaleType = 'zh-CN' | 'en' | 'jp'
 
   // global.d.ts 或其他声明文件

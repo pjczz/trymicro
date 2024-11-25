@@ -113,7 +113,6 @@ const loginLoading = ref(false)
 const verify = ref()
 const { showLoading, closeLoading } = useSpin()
 const captchaType = ref('blockPuzzle') // blockPuzzle 滑块 clickWord 点击文字
-showLoading({ text: '加油' })
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
 
 const LoginRules: Record<string, Rule[]> = {

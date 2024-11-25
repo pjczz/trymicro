@@ -18,7 +18,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'prettier/prettier': 'warn',
     'vue/multi-word-component-names': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'off', // 禁止使用 any 类型
     'vue/component-name-in-template-casing': 'off', // 关闭该规则
     '@typescript-eslint/no-unsafe-function-type': 'off',
   },
