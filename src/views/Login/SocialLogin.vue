@@ -138,7 +138,7 @@ import { underlineToHump } from '@/utils'
 import Spin from '@/hooks/web/useLoading'
 
 import { useAppStore } from '@/stores/modules/app'
-import { useI18n } from '@/hooks/web/useI18n'
+
 import * as LoginApi from '@/api/login'
 import * as authUtil from '@/utils/auth'
 import { ThemeSwitch } from '@/layout/components/ThemeSwitch'

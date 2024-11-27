@@ -1,6 +1,5 @@
 import { Config, driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
-import { useI18n } from '@/hooks/web/useI18n'
 
 const { t } = useI18n()
 

@@ -18,7 +18,7 @@
 </template>
 <script lang="ts" setup>
 import logoImg from '@/assets/imgs/logo.png'
-import { useI18n } from '@/hooks/web/useI18n'
+
 import LoginFormTitle from './LoginFormTitle.vue'
 import { LoginStateEnum, useLoginState } from './useLogin'
 import { computed, defineOptions, unref } from 'vue'

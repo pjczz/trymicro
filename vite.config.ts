@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import viteCompression from 'vite-plugin-compression'
+import AutoImport from 'unplugin-auto-import/vite'
 const root = process.cwd()
 // https://vite.dev/config/
 export default ({ command, mode }) => {
@@ -30,6 +31,19 @@ export default ({ command, mode }) => {
         threshold: 10240, // 文件大小超过此值时进行压缩，单位为字节
         algorithm: 'gzip', // 压缩算法，可选 'gzip' 或 'brotli'
         ext: '.gz', // 压缩后的文件扩展名
+      }),
+      AutoImport({
+        imports: [
+          'vue',
+          'vue-router',
+          'pinia',
+          {
+            '@/hooks/web/useI18n': ['useI18n'],
+            '@/utils/micro': ['useMicro'],
+          },
+        ],
+        dts: 'types/auto-imports.d.ts', // 使用typescript，需要指定生成对应的d.ts文件或者设置为true,生成默认导入d.ts文件
+        dirs: ['src/stores', 'src/composables', 'src/hooks'],
       }),
     ],
     server: {

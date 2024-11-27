@@ -77,9 +77,12 @@ export const useUserStore = defineStore('admin-user', {
       if (!userInfo) {
         userInfo = await getInfo()
       }
+      console.log(userInfo, 'userInfo')
       this.permissions = userInfo.permissions
       this.roles = userInfo.roles
       this.user = userInfo.user
+      const useTrack = window.$useTrack
+      useTrack.setParams({ uid: userInfo.user.id, tenantId: '0' })
       this.isSetUser = true
       wsCache.set(CACHE_KEY.USER, userInfo)
       wsCache.set(CACHE_KEY.ROLE_ROUTERS, userInfo.menus)

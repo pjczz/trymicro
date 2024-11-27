@@ -1,5 +1,5 @@
 import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
-import { useI18n } from '@/hooks/web/useI18n'
+
 const { t } = useI18n() // 国际化
 
 /**

@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios'
 import { getSignature } from '../../utils/index'
-import { useI18n } from '@/hooks/web/useI18n'
 
 import { message as Message, Modal, notification } from 'ant-design-vue'
 import qs from 'qs'
@@ -37,6 +36,7 @@ const service: AxiosInstance = axios.create({
   timeout: request_timeout, // 请求超时时间
   withCredentials: false, // 禁用 Cookie 等信息
 })
+
 const getHttpError = (config, reason, error: unknown = null) => {
   // console.log('在请求中初始化',app)
   if (!config.url.includes('/adapter/log/reportOperationLog')) {

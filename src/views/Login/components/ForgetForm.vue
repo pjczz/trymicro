@@ -76,7 +76,7 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { watch, ref, reactive, defineEmits } from 'vue'
 import { setToken } from '@/utils/auth'
-import { useI18n } from '@/hooks/web/useI18n'
+
 import { sendSmsCode, reqResetPasswordBySms } from '@/api/login'
 import { useFormValid } from './useLogin'
 import Spin from '@/hooks/web/useLoading'

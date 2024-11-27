@@ -50,7 +50,7 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { defineEmits, watch, ref, reactive } from 'vue'
 import { validatePassword } from '@/utils/validate'
-import { useI18n } from '@/hooks/web/useI18n'
+
 import { reqResetPassword } from '@/api/login'
 import { message } from 'ant-design-vue'
 import { useRouter } from 'vue-router'

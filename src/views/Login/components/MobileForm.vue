@@ -86,7 +86,7 @@ import { LoginStateEnum, useFormValid, useLoginState } from './useLogin'
 import { message } from 'ant-design-vue'
 import { useSpin } from '@/hooks/web/useSpin'
 const { showLoading, hideLoading } = useSpin()
-import { useI18n } from '@/hooks/web/useI18n'
+
 const props = defineProps({
   agreeCheck: {
     type: Boolean,

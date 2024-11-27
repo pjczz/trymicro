@@ -75,8 +75,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useI18n } from '@/hooks/web/useI18n'
-
 import { LoginStateEnum, useLoginState } from './components/useLogin'
 const { setLoginState, getLoginState } = useLoginState()
 import { LoginForm, MobileForm, QrCodeForm, RegisterForm, SSOLoginVue } from './components'

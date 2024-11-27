@@ -1,5 +1,5 @@
 import { message, Modal, notification } from 'ant-design-vue'
-import { useI18n } from '@/hooks/web/useI18n'
+
 export const useMessage = () => {
   const { t } = useI18n()
   return {

@@ -88,13 +88,14 @@
 import { message } from 'ant-design-vue'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { computed, ref, reactive, defineProps, watch, onMounted, unref } from 'vue'
+import { Verify } from '@/components/Verifition/index'
 const props = defineProps({
   agreeCheck: {
     type: Boolean,
     default: false,
   },
 })
-import { useI18n } from '@/hooks/web/useI18n'
+
 import * as authUtil from '@/utils/auth'
 import * as LoginApi from '@/api/login'
 import { LoginStateEnum, useFormValid, useLoginState } from './useLogin'
@@ -114,6 +115,7 @@ const verify = ref()
 const { showLoading, closeLoading } = useSpin()
 const captchaType = ref('blockPuzzle') // blockPuzzle 滑块 clickWord 点击文字
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
+const useTrack = window.$useTrack
 
 const LoginRules: Record<string, Rule[]> = {
   tenantName: [
@@ -175,6 +177,8 @@ const getCode = async () => {
 const getTenantId = async () => {
   if (loginData.tenantEnable === 'true') {
     const res = await LoginApi.getTenantIdByName(loginData.loginForm.tenantName)
+
+    useTrack.setParams({ tenantId: res })
     authUtil.setTenantId(res)
   }
 }

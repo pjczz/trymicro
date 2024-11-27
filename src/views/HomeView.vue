@@ -2,14 +2,14 @@
   <div class="home">
     <!--  -->
     <micro-app
-      name="yudao-ui-admin-vue3"
+      :name="baseName"
       @created="created"
       @beforemount="beforemount"
       @mounted="mounted"
       @unmount="unmount"
       @error="error"
       :url="url"
-      baseroute="/home"
+      :baseroute="baseroute"
       iframe
     ></micro-app>
   </div>
@@ -17,9 +17,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { APPLICATION } from '@/assets/son/index'
 // 首先路由拦截  查询当前的meta 如果这个路由是子路由的 代表进入子系统  保存到stage isSubSystem中
 // computed 判断使用什么组件  一个是homeBoard 一个是subBoard
 const url = ref(import.meta.env.VITE_YUDAO_API_URL)
+const baseroute = '/home'
+const baseName = APPLICATION.HOME
 console.log(url.value, 'url.value')
 const created = () => {
   console.log('micro-app元素被创建')

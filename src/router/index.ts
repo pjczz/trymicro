@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import type { App } from 'vue'
 import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '@/stores/modules/user'
-import { useI18n } from '@/hooks/web/useI18n'
 const { t } = useI18n()
+import { APPLICATION } from '@/assets/son'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +11,7 @@ const router = createRouter({
     {
       // 设置动态路由，/child/one、child/two，以及所有/child开头的路由都指向MyPage组件
       path: '/home/:page*',
-      name: 'child',
+      name: APPLICATION.HOME,
       component: HomeView,
       meta: {
         name: 'yudao',
@@ -19,7 +19,7 @@ const router = createRouter({
     },
     {
       path: '/about/:page*',
-      name: 'about',
+      name: APPLICATION.ABOUT,
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -39,6 +39,18 @@ const router = createRouter({
         name: '',
       },
     },
+    {
+      path: '/user/profile',
+      name: 'profile',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '../views/absView.vue'),
+      meta: {
+        name: '',
+      },
+    },
+
     {
       path: '/:pathMatch(.*)*', // 处理所有未匹配的路由
       redirect: '/home', // 重定向到首页

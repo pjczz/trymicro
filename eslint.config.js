@@ -22,6 +22,8 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
       'vue/component-name-in-template-casing': 'off', // 关闭该规则
       '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
 

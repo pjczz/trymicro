@@ -50,39 +50,37 @@
         </div>
       </template>
     </div>
-    <div class="ml-auto flex">
-      <div class="w-[500px]">
-        <a-input v-model:value="search" :placeholder="placeholder">
-          <template #prefix> 搜索图标 </template>
-        </a-input>
+    <div class="ml-auto flex h-full items-center cursor-pointer">
+      <div @click="handleFullScreen" class="func-button flex items-center h-full px-[10px]">
+        <img style="width: 18px; height: 18px" src="@/assets/img/fullscreen.svg" alt="" />
       </div>
-      <div>云市场</div>
-      <div>云市场</div>
-      <div>云市场</div>
+      <SearchInfo />
+      <FontInfo />
+      <UserInfo />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { headerList as stHeaderList, catagoryData as slCatagoryData, recentList as slRecentList } from './mock.js'
 import homeBoard from '@/components/dropBoard/homeBoard.vue'
 import subBoard from '@/components/dropBoard/subBoard.vue'
-import { useUserStore } from '@/stores/modules/user'
 import { defineComponent } from 'vue'
+import { UserInfo } from '../UserInfo/index'
+import { FontInfo } from '../FontInfo/index'
+import { SearchInfo } from '../SearchInfo/index.js'
 
 defineComponent({ name: 'headerComponent' })
-const store = useUserStore()
 const headerList = ref(stHeaderList)
 const tempHoverIndex = ref(0)
 const show = ref(false)
 const siderShow = ref(false)
-const search = ref()
 const catagoryData = ref(slCatagoryData)
-const placeholder = ref('搜索共享租车')
 
-const isSubMenu = computed(() => {
-  return store.isSubMenu
-})
+// const isSubMenu = computed(() => {
+//   return store.isSubMenu
+// })
+const isSubMenu = ref(false)
 const recentList = ref(slRecentList)
 watchEffect(() => console.log(siderShow.value, 'ssidershow change'))
 const handleMouseLeave = () => {
@@ -101,6 +99,9 @@ const handleHover = () => {
 }
 const handleShowClick = () => {
   siderShow.value = !siderShow.value
+}
+const handleFullScreen = () => {
+  document.documentElement.requestFullscreen()
 }
 </script>
 <style lang="scss" scoped>
@@ -188,5 +189,9 @@ const handleShowClick = () => {
 
 .expand-btn-active span:nth-child(3) {
   transform: rotate(-45deg) !important;
+}
+
+.func-button:hover {
+  background-color: #f6f6f6;
 }
 </style>

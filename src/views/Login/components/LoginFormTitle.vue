@@ -5,7 +5,7 @@
 </template>
 <script lang="ts" setup>
 import { LoginStateEnum, useLoginState } from './useLogin'
-import { useI18n } from '@/hooks/web/useI18n'
+
 defineOptions({ name: 'LoginFormTitle' })
 import { computed, unref } from 'vue'
 
