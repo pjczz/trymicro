@@ -69,7 +69,10 @@ const handleShowClick = () => {
   show.value = true;
 };
 const handleClick = () => {
-  microApp.router.push({ name: "Vben Admin Antd", path: "/about/workspace" });
+  microApp.router.push({
+    name: "yudao-ui-admin-vue3",
+    path: "/system/role",
+  });
 };
 </script>
 <style lang="scss" scoped>

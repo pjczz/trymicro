@@ -18,7 +18,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*', // 处理所有未匹配的路由
-    redirect: '/about',           // 重定向到首页
+    redirect: '/home',           // 重定向到首页
   },
 ]
 

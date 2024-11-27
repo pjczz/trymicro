@@ -8,7 +8,7 @@
       @mounted="mounted"
       @unmount="unmount"
       @error="error"
-      url="http://localhost:80/"
+      url="http://localhost:7528"
       baseroute="/home"
       iframe
     ></micro-app>
