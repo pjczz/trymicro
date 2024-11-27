@@ -1,8 +1,12 @@
 <template>
   <div class="home-board">
-    <baseBoard :width="props.width" :height="props.height" v-show="true">
+    <baseBoard :width="props.width" :height="props.height" v-show="props.show">
       <div class="flex h-full">
-        <template v-if="props.info.displayStyle === 'waterfall' || !props.info.displayStyle">
+        <template
+          v-if="
+            props.info.displayStyle === 'waterfall' || !props.info.displayStyle
+          "
+        >
           <waterfallBoard :info="props.info" />
         </template>
         <template v-if="props.info.displayStyle === 'tile'">
@@ -18,7 +22,7 @@
 import { ref, defineProps, defineEmits } from "vue";
 import baseBoard from "./components/baseBoard";
 import waterfallBoard from "./components/waterfallBoard";
-import tileWaterfallBoard from "./components/tileWaterfallBoard"; 
+import tileWaterfallBoard from "./components/tileWaterfallBoard";
 const props = defineProps({
   width: {
     type: String,

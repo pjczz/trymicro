@@ -8,8 +8,8 @@
       @mounted="mounted"
       @unmount="unmount"
       @error="error"
-      url="http://192.168.1.120:80/"
-      baseroute='/home'
+      url="http://localhost:80/"
+      baseroute="/home"
       iframe
     ></micro-app>
   </div>
@@ -40,7 +40,7 @@ const error = () => {
 };
 </script>
 <style lang="scss">
-.home{
+.home {
   padding: 0;
   margin: 0;
 }

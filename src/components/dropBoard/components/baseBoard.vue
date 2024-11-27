@@ -9,6 +9,7 @@
 </template>
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
+
 const props = defineProps({
   width: {
     type: String,
@@ -20,6 +21,7 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(["show", "offShow"]);
+
 const onShow = () => {
   emit("show");
 };

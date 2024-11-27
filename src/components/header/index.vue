@@ -1,16 +1,22 @@
 <template>
   <div
-    class="header w-full h-50px bg-[#ffffff] z-50 fixed top-0 left-0 flex items-center relative"
+    class="header w-full h-50px bg-[#ffffff] fixed top-0 left-0 flex items-center z-10000"
   >
     <div class="mx-[24px]">
       <img src="@/assets/logo.png" class="w-[40px] h-[40px] ml-10px" alt="" />
     </div>
     <div class="flex items-center h-full" @mouseleave="handleMouseLeave">
-      <homeBoard height="694px" :info="headerList[tempHoverIndex]" :data-list="headerList[tempHoverIndex].dataList" :show="show" />
+      <homeBoard
+        height="694px"
+        :info="headerList[tempHoverIndex]"
+        :data-list="headerList[tempHoverIndex].dataList"
+        :show="show"
+      />
       <div
         class="p-[10px] left-item flex justify-center relative cursor-pointer select-none"
         :class="{ active: item.active }"
-        v-for="(item,index) in headerList"
+        v-for="(item, index) in headerList"
+        @click="handleClick"
       >
         <div class="board-title" @mouseover="handleShowHover(index)">
           {{ item.name }}
@@ -36,8 +42,10 @@ import { ref } from "vue";
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { headerList as stHeaderList } from "./mock.js";
 import homeBoard from "@/components/dropBoard/homeBoard";
-const headerList = ref(stHeaderList)
-const tempHoverIndex = ref(0)
+import microApp from "@micro-zoe/micro-app";
+
+const headerList = ref(stHeaderList);
+const tempHoverIndex = ref(0);
 const show = ref(false);
 const search = ref();
 const placeholder = ref("搜索共享租车");
@@ -54,11 +62,14 @@ const handleMouseLeave = (e) => {
   show.value = false;
 };
 const handleShowHover = (index) => {
-  tempHoverIndex.value = index
+  tempHoverIndex.value = index;
   show.value = true;
 };
 const handleShowClick = () => {
   show.value = true;
+};
+const handleClick = () => {
+  microApp.router.push({ name: "Vben Admin Antd", path: "/about/workspace" });
 };
 </script>
 <style lang="scss" scoped>
