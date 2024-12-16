@@ -29,11 +29,20 @@ export const useMicro = () => {
       })
     })
   }
+  function sendDataByName(name: string, data: Record<string, any>) {
+    console.log('sendDataByName')
+    microApp.setData(name, data)
+  }
+  function sendGlobalData(data: Record<string, any>) {
+    microApp.setGlobalData(data)
+  }
   return {
     setRouteByPath,
     getDataByAppName,
     getDataByAppNameListener,
     getGlobalData,
     getGlobalDataListener,
+    sendDataByName,
+    sendGlobalData,
   }
 }

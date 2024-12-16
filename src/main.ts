@@ -33,7 +33,7 @@ window.$useTrack = new useTrack({
 await router.isReady()
 app.mount('#app')
 microApp.start({
-  'router-mode': 'native-scope',
+  'router-mode': 'native',
   // preFetchApps: [
   //   { name: 'Vben Admin Antd', url: 'http://192.168.1.120:5666/', level: 3, iframe:true }, // 加载资源、解析并渲染
   // ],

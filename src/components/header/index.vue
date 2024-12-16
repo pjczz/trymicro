@@ -1,5 +1,5 @@
 <template>
-  <div class="header w-full h-50px bg-[#ffffff] z-50 fixed top-0 left-0 flex items-center relative">
+  <div class="header w-full h-50px bg-[#ffffff] z-999 fixed top-0 left-0 flex items-center relative">
     <div class="bg-[#ff6a00]" v-if="isSubMenu">
       <button
         @click="handleShowClick"
@@ -38,6 +38,7 @@
           @mouseover="handleShowHover(index)"
           v-for="(item, index) in headerList"
           :key="index"
+          @click="useMicro().setRouteByPath('vben', '/about/workspace')"
         >
           <div class="board-title">
             {{ item.name }}
@@ -69,6 +70,7 @@ import { defineComponent } from 'vue'
 import { UserInfo } from '../UserInfo/index'
 import { FontInfo } from '../FontInfo/index'
 import { SearchInfo } from '../SearchInfo/index.js'
+import { useMicro } from '@/utils/micro/index.js'
 
 defineComponent({ name: 'headerComponent' })
 const headerList = ref(stHeaderList)

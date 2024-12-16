@@ -1,56 +1,3 @@
-<script lang="ts" setup>
-import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
-import { APPPATH } from '@/assets/son'
-
-defineOptions({ name: 'SearchInfo' })
-
-const resList = ref([])
-
-const searchText = ref('')
-const openSearch = ref(false)
-
-const { wsCache } = useCache()
-
-const route = useRoute()
-
-const name = ref(String(route.name))
-let path = APPPATH[name.value] || route.path
-console.log(path, name.value, 'value', route)
-watch(
-  () => route.name,
-  (newPath) => {
-    name.value = String(newPath)
-    path = APPPATH[name.value] || route.path
-  },
-)
-const user = wsCache.get(CACHE_KEY.USER)
-const routers = user.menus // 路由对象
-const handleSearch = (val) => {
-  resList.value = []
-  getSearchList(routers, val)
-  console.log(resList.value)
-}
-const getSearchList = (list: { name: string; children: [] | null; component: string }[], val: string) => {
-  console.log(path, name.value, 'route')
-  list.forEach((item) => {
-    if (item.children) {
-      getSearchList(item.children, val)
-    } else if (item.name && item.name.includes(val)) {
-      console.log(item, val)
-      resList.value.push({
-        label: item.name + item.component,
-        value: path + '/' + item.component.replace('/index', ''),
-      })
-    }
-  })
-}
-const handleChange = (val) => {
-  // 父让子跳转
-  console.log(val, 'val')
-  useMicro().setRouteByPath(name.value, val)
-}
-</script>
-
 <template>
   <div class="custom-hover py-[10px] flex" @click="openSearch = true">
     <div class="flex items-center">
@@ -74,6 +21,68 @@ const handleChange = (val) => {
     </div>
   </div>
 </template>
+<script lang="ts" setup>
+import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
+// import { APPPATH } from '@/assets/son'
+// import microApp from '@micro-zoe/micro-app';
+defineOptions({ name: 'SearchInfo' })
+
+const resList = ref([])
+
+const searchText = ref('')
+const openSearch = ref(false)
+
+const { wsCache } = useCache()
+
+const route = useRoute()
+
+const name = ref(String(route.name))
+const getRoutersList = (list: { name: string; children: [] | null; path: string }[], fatherPath: string = '') => {
+  list.forEach((item) => {
+    fatherPath && (item.path = fatherPath + '/' + item.path)
+    if (item.children) {
+      getRoutersList(item.children, item.path)
+    }
+  })
+}
+watch(
+  () => route.name,
+  (newPath) => {
+    name.value = String(newPath)
+  },
+)
+const routers = wsCache.get(CACHE_KEY.ROLE_ROUTERS)
+
+getRoutersList(routers)
+console.log(routers, 'route')
+const handleSearch = (val) => {
+  // microApp.router.push({ name: 'vben', path: '/about/vben-admin/about' })
+  // microApp.router.push({ name: 'tongguan', path: '/home/system/role' })
+  resList.value = []
+  getSearchList(routers, val)
+  console.log(resList.value)
+}
+const getSearchList = (list: { name: string; children: [] | null; path: string }[], val: string) => {
+  list.forEach((item) => {
+    if (item.children) {
+      getSearchList(item.children, val)
+    } else if (item.name && item.name.includes(val)) {
+      resList.value.push({
+        label: item.name + item.path,
+        value: item.path,
+      })
+    }
+  })
+}
+
+const handleChange = (val) => {
+  // 父让子跳转
+  console.log(val, 'val')
+  // useMicro().setRouteByPath(name.value, val)
+  useMicro().sendDataByName(name.value, { tongguanRoute: val })
+}
+</script>
+
 <style lang="scss" scoped>
 .search-board {
   transition: all 0.8s;
