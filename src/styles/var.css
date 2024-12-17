@@ -29,6 +29,8 @@
   /* header start */
   --top-header-bg-color: '#fff';
 
+  --top-header-header-height: 50px;
+
   --top-header-text-color: 'inherit';
 
   --top-header-hover-color: #f6f6f6;
@@ -55,8 +57,8 @@
   --app-footer-height: 50px;
 
   --transition-time-02: 0.2s;
-  
-  --login-button-color:#244C5E;
+
+  --login-button-color: #244C5E;
 }
 
 .dark {

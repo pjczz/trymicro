@@ -3,14 +3,14 @@
     <baseBoard :isAnimate="true" @offShow="handleClose" :width="props.width" :height="props.height" :show="props.show">
       <div class="flex h-full">
         <div class="left-board h-full w-[240px]">
-          <a-menu
+          <Menu
             v-model:selectedKeys="state.selectedKeys"
             style="width: 100%"
             mode="inline"
             :open-keys="state.openKeys"
             :items="items"
             @openChange="onOpenChange"
-          ></a-menu>
+          ></Menu>
         </div>
         <div class="right-board w-[790px]">
           <productBoard

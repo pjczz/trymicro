@@ -1,5 +1,7 @@
 <template>
-  <div class="header w-full h-50px bg-[#ffffff] z-999 fixed top-0 left-0 flex items-center relative">
+  <div
+    class="header w-full h-[var(--top-header-header-height)] bg-[#ffffff] z-999 fixed top-0 left-0 flex items-center relative"
+  >
     <div class="bg-[#ff6a00]" v-if="isSubMenu">
       <button
         @click="handleShowClick"
@@ -38,7 +40,7 @@
           @mouseover="handleShowHover(index)"
           v-for="(item, index) in headerList"
           :key="index"
-          @click="useMicro().setRouteByPath('vben', '/about/workspace')"
+          @click="setRouteByPath('vben', '/about/workspace')"
         >
           <div class="board-title">
             {{ item.name }}
@@ -55,6 +57,7 @@
       <div @click="handleFullScreen" class="func-button flex items-center h-full px-[10px]">
         <img style="width: 18px; height: 18px" src="@/assets/img/fullscreen.svg" alt="" />
       </div>
+      <Message />
       <SearchInfo />
       <FontInfo />
       <UserInfo />
@@ -66,11 +69,12 @@ import { ref, watchEffect } from 'vue'
 import { headerList as stHeaderList, catagoryData as slCatagoryData, recentList as slRecentList } from './mock.js'
 import homeBoard from '@/components/dropBoard/homeBoard.vue'
 import subBoard from '@/components/dropBoard/subBoard.vue'
+import { Message } from '@/components/Message/index'
 import { defineComponent } from 'vue'
 import { UserInfo } from '../UserInfo/index'
 import { FontInfo } from '../FontInfo/index'
 import { SearchInfo } from '../SearchInfo/index.js'
-import { useMicro } from '@/utils/micro/index.js'
+import { setRouteByPath } from '@/utils/micro/index.js'
 
 defineComponent({ name: 'headerComponent' })
 const headerList = ref(stHeaderList)

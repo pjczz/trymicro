@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { formatDate } from '@/utils/formatTime'
 import * as NotifyMessageApi from '@/api/system/notify/message'
-
+import { Button, Badge, TabPane, Tabs, Dropdown } from 'ant-design-vue'
+import { APPLICATION } from '@/assets/son/index'
+import { setRouteByPath } from '@/utils/micro/index'
 defineOptions({ name: 'MessageModule' })
 
 const { push } = useRouter()
 const activeName = ref('notice')
-const unreadCount = ref(0) // 未读消息数量
+const unreadCount = ref(10) // 未读消息数量
 const list = ref<any[]>([]) // 消息列表
 
 // 获得消息列表
@@ -25,6 +27,7 @@ const getUnreadCount = async () => {
 
 // 跳转我的站内信
 const goMyList = () => {
+  setRouteByPath(APPLICATION.HOME, '/user/notify-message')
   push({
     name: 'MyNotifyMessage',
   })
@@ -45,34 +48,37 @@ onMounted(() => {
 </script>
 <template>
   <div class="message">
-    <ElPopover :width="400" placement="bottom" trigger="click">
-      <template #reference>
-        <ElBadge :is-dot="unreadCount > 0" class="item">
-          <Icon :size="18" class="cursor-pointer" icon="ep:bell" @click="getList" />
-        </ElBadge>
+    <Dropdown placement="bottom" trigger="click">
+      <Badge :count="unreadCount" class="item flex">
+        <div @click="getList"><img alt="" class="message-icon w-[16px]" src="@/assets/imgs/message.svg" /></div>
+      </Badge>
+      <template #overlay>
+        <div class="w-[400px] flex flex-col bg-white p-[20px]">
+          <div class="h-[400px]">
+            <Tabs v-model="activeName">
+              <TabPane key="1" tab="我的站内信" name="notice">
+                <template v-for="item in list" :key="item.id">
+                  <div class="message-item w-[500px]">
+                    <img alt="" src="@/assets/imgs/avatar.gif" />
+                    <div class="message-content">
+                      <span class="message-title"> {{ item.templateNickname }}：{{ item.templateContent }} </span>
+                      <span class="message-date">
+                        {{ formatDate(item.createTime) }}
+                      </span>
+                    </div>
+                  </div>
+                </template>
+                <div style="margin-top: 10px; text-align: right"></div>
+              </TabPane>
+            </Tabs>
+          </div>
+          <div class="flex ml-auto">
+            <Button preIcon="ep:view" title="查看全部" type="primary" @click="goMyList">查看全部</Button>
+          </div>
+        </div>
       </template>
-      <ElTabs v-model="activeName">
-        <ElTabPane label="我的站内信" name="notice">
-          <el-scrollbar class="message-list">
-            <template v-for="item in list" :key="item.id">
-              <div class="message-item">
-                <img alt="" class="message-icon" src="@/assets/imgs/avatar.gif" />
-                <div class="message-content">
-                  <span class="message-title"> {{ item.templateNickname }}：{{ item.templateContent }} </span>
-                  <span class="message-date">
-                    {{ formatDate(item.createTime) }}
-                  </span>
-                </div>
-              </div>
-            </template>
-          </el-scrollbar>
-        </ElTabPane>
-      </ElTabs>
       <!-- 更多 -->
-      <div style="margin-top: 10px; text-align: right">
-        <XButton preIcon="ep:view" title="查看全部" type="primary" @click="goMyList" />
-      </div>
-    </ElPopover>
+    </Dropdown>
   </div>
 </template>
 <style lang="scss" scoped>

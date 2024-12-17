@@ -33,6 +33,7 @@
             <img alt="" class="ml-12px h-100px w-100px" src="@/assets/imgs/logo.png" />
             <div class="enter-x mb-3 font-bold ml-[20px] text-[30px]">
               {{ t('login.fiftyFivekgCloud') }}
+              <!-- {{ t('profile.password.oldPassword') }} -->
             </div>
             <div class="flex ml-[20px] my-[20px]">
               <div

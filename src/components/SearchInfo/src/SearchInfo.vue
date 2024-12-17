@@ -25,6 +25,7 @@
 import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
 // import { APPPATH } from '@/assets/son'
 // import microApp from '@micro-zoe/micro-app';
+import { sendDataByName } from '@/utils/micro'
 defineOptions({ name: 'SearchInfo' })
 
 const resList = ref([])
@@ -78,8 +79,7 @@ const getSearchList = (list: { name: string; children: [] | null; path: string }
 const handleChange = (val) => {
   // 父让子跳转
   console.log(val, 'val')
-  // useMicro().setRouteByPath(name.value, val)
-  useMicro().sendDataByName(name.value, { tongguanRoute: val })
+  sendDataByName(name.value, { tongguanRoute: val })
 }
 </script>
 

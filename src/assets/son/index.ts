@@ -1,5 +1,5 @@
 export const APPLICATION = {
-  HOME: 'tongguan',
+  HOME: 'setting',
   ABOUT: 'vben',
 }
 export const APPPATH = {

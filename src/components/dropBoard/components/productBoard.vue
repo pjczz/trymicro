@@ -138,7 +138,9 @@ watchEffect(() => {
 
 .catagory {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 设置 3 列 */
+  grid-template-columns: repeat(3, 1fr);
+
+  /* 设置 3 列 */
   column-gap: 12px;
   font-size: 12px;
 }

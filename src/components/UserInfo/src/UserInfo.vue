@@ -34,7 +34,8 @@ const loginOut = () => {
   })
 }
 const toProfile = async () => {
-  push('/user/profile')
+  // setRouteByPath(APPLICATION.HOME, '/user/profile')
+  push({ path: '/user/profile' })
 }
 </script>
 

@@ -48,6 +48,19 @@ export default ({ command, mode }) => {
     ],
     server: {
       port: 7529, // 设置端口号为 7529（根据需要修改）
+      // proxy: {
+      //   ['/admin-api']: {
+      //     target: env.VITE_BASE_URL,
+      //     ws: false,
+      //     changeOrigin: true,
+      //   //   rewrite: (path) => path.replace(new RegExp(`^/admin-api`), ''),
+      //   },
+      //   ['/infra/file/upload']:{
+      //     target: 'http://tgsystem.uqbike.cn/admin-api',
+      //     ws: false,
+      //     changeOrigin: true,
+      //   }
+      // },
     },
     resolve: {
       alias: {

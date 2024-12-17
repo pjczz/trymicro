@@ -7,6 +7,11 @@
 export {}
 declare global {
   const EffectScope: (typeof import('vue'))['EffectScope']
+  const Form: (typeof import('ant-design-vue'))['Form']
+  const FormItem: (typeof import('ant-design-vue'))['FormItem']
+  const Input: (typeof import('ant-design-vue'))['Input']
+  const Select: (typeof import('ant-design-vue'))['Select']
+  const Spin: (typeof import('ant-design-vue'))['Spin']
   const acceptHMRUpdate: (typeof import('pinia'))['acceptHMRUpdate']
   const computed: (typeof import('vue'))['computed']
   const createApp: (typeof import('vue'))['createApp']
@@ -75,6 +80,7 @@ declare global {
   const useI18n: (typeof import('@/hooks/web/useI18n'))['useI18n']
   const useId: (typeof import('vue'))['useId']
   const useLink: (typeof import('vue-router'))['useLink']
+  const useMessage: (typeof import('@/hooks/web/useMessage'))['useMessage']
   const useMicro: (typeof import('@/utils/micro'))['useMicro']
   const useModel: (typeof import('vue'))['useModel']
   const useRoute: (typeof import('vue-router'))['useRoute']
